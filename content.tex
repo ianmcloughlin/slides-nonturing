@@ -1,26 +1,3 @@
-\begin{frame}{Drawing a Turing machine}
-  \vspace{10mm}
-  \begin{adjustbox}{max width={0.9\textwidth},center} 
-    \begin{tikzpicture}
-      \begin{scope}[every node/.style={circle,thick,draw=black,fill=black}]
-        \node[] (A) at (0,0) {};
-        \node[] (B) at (2,2) {};
-        \node[] (C) at (6,0) {};
-        \node[] (D) at (2,-2) {};
-      \end{scope}
-      \begin{scope}[every edge/.style={draw=black,very thick}]
-        \path (A) edge[bend right=30] (B);
-        \path (A) edge[bend left=30] (B);
-        \path (A) edge[bend right=30] (D);
-        \path (A) edge[bend left=30]  (D);
-        \path (B) edge (C);
-        \path (A) edge (C);
-        \path (D) edge (C);
-      \end{scope}
-    \end{tikzpicture}
-  \end{adjustbox}
-\end{frame}
-
 \begin{frame}{Non-deterministic Turing machine}
   \begin{description}
     \item[The usual] Turing machines are often called deterministic Turing machines.
@@ -56,4 +33,151 @@
     By verified we mean that a deterministic Turing machine can accept a language $\{ wc \}$ where $w$ is in $A$ and $c$ is some string, called the certificate for $w$.
   \end{alertblock}
 
+\end{frame}
+
+
+\begin{frame}{NP-complete problems}
+  \begin{definition}
+    A problem is NP-hard if each problem in NP can be reduced to it in polynomial time.
+  \end{definition}
+
+  \begin{alertblock}{Reduction}
+    Reduction is a way of converting one problem into another, so that a solution to one is a solution to the other.
+    By reducing decision problem A to decision problem B, we mean that we can transform inputs to A into inputs to B in such a way that a given input to A is accepted iff the corresponding input to B is.
+  \end{alertblock}
+
+  \begin{definition}
+    A problem is NP-complete if it's in NP and is NP-hard.
+  \end{definition}
+\end{frame}
+
+
+\begin{frame}{Subset sum problem}
+  
+  \begin{alertblock}{Problem}
+    Given a set of integers $S$, is there a non-empty subset whose elements sum to zero?
+  \end{alertblock}
+
+  \vspace{4mm}
+  
+  \begin{exampleblock}{Example}
+    Does $\{ 1, 3, 7, -5, -13, 2, 9, -8 \}$ have such a subset?
+  \end{exampleblock}
+  
+  \vspace{4mm}
+
+  \begin{alertblock}{Note}
+     If somebody suggests a solution, it is very quick to check it.
+    Being able to quickly verify a solution is a characteristic of NP problems.
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}{SAT motivation}
+  \begin{description}
+    \item[SAT] is short for Boolean SATisfiability.
+    \item[It is] the archetypal NP-complete problem.
+    \item[Informally] it asks if there is a way to efficiently decide if an expression containing a bunch of Boolean variables combined using ands, ors, nots and brackets has any setting of the variables that makes the expression true.
+  \end{description}
+
+  \begin{exampleblock}{SAT instance example}
+    Consider the expression $(x_1 \lor \neg{x_2}) \land (\neg{x_1} \lor x_2 \lor x_3) \land \neg{x_1}$, where $x_1$, $x_2$ and $x_3$ are true/false variables.
+    Is there any setting of the variables that makes the expression true?
+  \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Propositional logic}
+  \begin{description}
+    \item[Literals] are Boolean variables (can be True or False), and their negations. They are represented by lower case letters like $a$ and $x_i$.
+    \vspace{0.3cm}
+    \item[Clause] are expressions based on literals, that evaluate as True or False based on the literals. We use not, and and or on the literals. We'll sometimes call them expressions.
+    \vspace{0.3cm}
+    \item[Not] is depicted by $\neg$. So ``not $a$'' is denoted by $\neg a$.
+    \vspace{0.3cm}
+    \item[Or] is depicted by $\lor$. So ``$a$ or $b$'' is denoted by $a \lor b$.
+    \vspace{0.3cm}
+    \item[And] is depicted by $\land$. So ``$a$ and $b$'' is denoted by $a \land b$.
+  \end{description}
+\end{frame}
+
+
+\begin{frame}{Normal forms}
+  \begin{description}
+    \item[CNF] A clause is in Conjunctive Normal Form if it is a ``conjunction of disjunctions'': $(a \lor b) \land (\neg a \lor c) \land d$.
+    \vspace{0.5cm}
+    \item[DNF] A clause is in Disjunctive Normal Form if it is a ``disjunction of conjunctions'': $(a \land b) \lor (\neg a \land c) \lor d$.
+  \end{description}
+  
+  \vspace{4mm}
+  \begin{alertblock}{Converting to CNF and DNF}
+    Every Boolean expression can be converted to CNF, and every Boolean expression can also be converted to DNF.
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}{Four laws}
+  The following four laws can be used to convert expressions to CNF and DNF.
+  The first two are known as De Morgan's laws, and the latter two are called the distributivity laws.
+  \vspace{4mm}
+  \begin{alertblock}{Conversion laws}
+    \[ \neg ( a \lor b) = \neg a \land \neg b \]
+    \[ \neg ( a \land b) = \neg a \lor \neg b \]
+    \[ c \land ( a \lor b) = (c \land a) \lor (c \land b) \]
+    \[ c \lor ( a \land b) = (c \lor a) \land (c \lor b) \]
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}{Boolean Satisfiability Problem (SAT)}
+  \begin{description}
+    \item[SAT] is the set of all Boolean expressions that are satisfiable.
+    \item[Satisfiable] expressions have some setting of their constituent variables that causes them to evaluate as true.
+    \item[The SAT decision problem] is the problem of deciding which Boolean expressions are in SAT.
+    \item[Note] that it's easy to verify that a given setting of the variables in an expression make it true.
+  \end{description}
+\end{frame}
+
+
+\begin{frame}{$k$-SAT}
+  $k$-SAT is like SAT except that all expressions must be in CNF and each clause must be a disjunction of $k$ literals.
+
+  \vspace{2mm}
+
+  \begin{description}
+    \item[2-SAT] example: $(a \lor b) \land (\neg c \lor d) \land \ldots$
+    \item[2-SAT] is not NP-complete. There are polynomial time algorithms that solve it.
+    \item[3-SAT] example: $(a \lor b \lor c) \land (\neg c \lor d \lor \neg a) \land \ldots$
+    \item[3-SAT] is NP complete.
+  \end{description}
+\end{frame}
+
+
+\begin{frame}{3-SAT is NP-Complete}
+
+  \begin{alertblock}{Reduction}
+    3-SAT is a special case of SAT, so 3-SAT must be in NP.
+    We can reduce SAT to 3-SAT in polynomial time.
+    First take the expression and convert it to a CNF expression (in polynomial time).
+    Then we just need to convert each clause into a CNF expression with 3 literals per clause.
+    
+    Suppose we have a clause with 1 literal: $a$.
+    Convert this to $(a \lor u_1 \lor u_2) \land (a \lor u_1 \lor \neg u_2) \land (a \lor \neg u_1 \lor u_2) \land (a \lor \neg u_1 \lor \neg u_2)$.
+    Suppose we have a clause with 2 literals: $a \lor b$.
+    Convert this to $(a \lor b \lor u_1) \land (a \lor b \lor \neg u_1))$.
+    
+    Now suppose we have a clause with $n$ literals: $a \lor b \lor c \lor \ldots$.
+    Convert this to $(a \lor b \lor u_1) \land (c \lor \neg u_1 \lor u_2)) \land \ldots \land (i \lor \neg u_{n-4} \lor u_{n-3}) \land (j \lor k \lor \neg u_{n-3})$.
+  \end{alertblock}
+
+\end{frame}
+
+
+\begin{frame}{SUBSETSUM and NP}
+  \begin{description}
+    \item[SUBSETSUM] is NP-complete.
+    \item[$2^n$] is the number of subsets. Note that $2^n$ is also the number of settings of $n$ Boolean variables.
+    \item[The correspondence] can be seen in terms of $0$'s and $1$'s. In SUBSETSUM the elements from the set that are included in a given subset are represented by $1$'s.
+    \item[The usual] proof that SUBSETSUM is NP-complete is done by reduction to 3-SAT.
+  \end{description}
 \end{frame}
