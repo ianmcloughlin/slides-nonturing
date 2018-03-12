@@ -1,0 +1,62 @@
+\begin{frame}{Recap on Languages}
+  \begin{description}
+    \item[Alphabet] Finite set of symbols, denoted $\Sigma$.
+    \item[String] Sequence of symbols, $w$ from $\Sigma$.
+    \item[Language] Set of strings, denoted $L$.
+    \item[Length] Of a string, denoted $|w|$  .
+    \item[Empty string] Unique string of length 0, denoted $\epsilon$.
+  \end{description}
+\end{frame}
+
+
+\begin{frame}{Kleene star}
+  \begin{description}
+    \item[Word concatenation:] $w_1 w_2$ is the concatenation of strings $w_1$ and $w_2$.
+    \item[String concatenation:] $L_1 L_2$ is the language resulting from the concatenation of all strings in $L_1$ and all words in $L_2$, in that order.
+    \item[Powers:] $L^0 = \{ \lambda \}$, $L^1 = L$ and $L^{n+1} = L^n L$ for all $n > 1$.
+  \end{description}
+  \vspace{0.5cm}
+  \begin{block}{Kleene Star}
+     \[ L^* =  \bigcup_{i=0}^{\infty} L^i \]
+  \end{block}
+  Note that treating the alphabet $\Sigma$ as a language in itself, we get that $\Sigma^*$ is the set of all words over $\Sigma$.
+\end{frame}
+
+
+\begin{frame}{Think about $\{0,1\}^*$}
+  Consider the set:
+  \[ \Sigma^* \quad \textrm{where} \quad \Sigma = \{0,1\} \]
+  \vspace{1mm}
+  \begin{description}
+    \item[$\Sigma^*$]  is the set of all strings (of all lengths) of 0's and 1's.
+    \item[Documents] on a computer are elements of $\Sigma^*$.
+    \item[Programs] on a computer are elements of $\Sigma^*$.
+    \item[The entire contents] of your hard drive is one big string of 0's and 1's, and so is in $\Sigma^*$.
+  \end{description}
+\end{frame}
+
+\begin{frame}{Decision problems}
+  \begin{description}
+    \item[Decision problems] are problems where the answer is 0 or 1.
+    \[ f:\{0,1\}^n \rightarrow \{0,1\} \]
+    \item[Turing machines] model decision problems by deciding languages.
+    \vspace{0.1cm}
+    \item[Deciders] are Turing machines that decide languages -- they end in an accept or fail state no matter what the input, as opposed to never finishing.
+    \vspace{0.1cm}
+    \item[Accept] is 1, fail is 0.
+  \end{description}
+\end{frame}
+
+\begin{frame}{Deciding Word documents}
+  \begin{alertblock}{Can a Turing machine decide valid Word documents?}
+    Word documents are just strings of 0's and 1's, elements of $\{0,1\}^*$.
+    Not all strings of 0's and 1's are valid Word documents.
+    
+    If you try to open any old string of 0's and 1's in Word, it will likely tell you your file is corrupt.
+    
+    Can we construct a Turing machine that accepts all valid Word documents, and fails otherwise?
+    
+    Word seems to be able to decide what a valid Word document is, but it's always dealing with finite inputs.
+    The specification might allow for infinite Word documents.
+  \end{alertblock}
+\end{frame}
